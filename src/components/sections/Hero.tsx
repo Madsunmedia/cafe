@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowRight, Sparkles, Star, Coffee } from "lucide-react";
+import { ArrowRight, Sparkles } from "lucide-react";
 import { MagneticButton } from "@/components/MagneticButton";
 import { useRef } from "react";
 
@@ -61,34 +61,8 @@ export function Hero() {
           </motion.div>
         </div>
 
-        {/* Right Side: Interactive Badge/Mini-Review (Layered Depth) */}
-        <div className="lg:col-span-5 relative flex items-center justify-center">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
-            animate={{ opacity: 1, scale: 1, rotate: 0 }}
-            transition={{ duration: 1.5, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="glass-panel p-10 max-w-[320px] relative z-30 shadow-2xl border-white/10 backdrop-blur-2xl hover:scale-105 transition-transform duration-700"
-          >
-             <div className="flex gap-1 text-gold-accent mb-6">
-               {[...Array(5)].map((_, i) => <Star key={i} size={14} fill="currentColor" />)}
-             </div>
-             <p className="text-lg text-cafe-100 italic leading-relaxed mb-8">
-               &quot;The most visually stunning cafe I&apos;ve ever visited. The extraction is pure liquid gold.&quot;
-             </p>
-             <div className="flex items-center gap-4">
-               <div className="w-10 h-10 rounded-full bg-cafe-800 border border-gold-accent/30 flex items-center justify-center text-gold-accent">
-                 <Coffee size={18} />
-               </div>
-               <div>
-                 <p className="text-[11px] text-white font-bold uppercase tracking-widest leading-none mb-1">Vogue Magazine</p>
-                 <p className="text-[9px] text-cafe-400 uppercase tracking-widest">Cultural Review 2026</p>
-               </div>
-             </div>
-
-             {/* Animated floating glow */}
-             <div className="absolute -top-10 -right-10 w-32 h-32 bg-orange-glow/20 rounded-full blur-[60px] animate-pulse" />
-          </motion.div>
-        </div>
+        {/* Right Side: Interactive Element (Empty to allow 3D scene to shine) */}
+        <div className="lg:col-span-5 relative flex items-center justify-center" />
       </div>
 
       {/* Floating Particles/Beans Layer */}
