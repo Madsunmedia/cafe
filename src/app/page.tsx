@@ -1,11 +1,18 @@
+"use client";
+
 import { PageLoader } from "@/components/PageLoader";
-import { CafeScene } from "@/components/canvas/CafeScene";
+import dynamic from "next/dynamic";
 import { Hero } from "@/components/sections/Hero";
 import { Menu } from "@/components/sections/Menu";
 import { About } from "@/components/sections/About";
 import { Experience } from "@/components/sections/Experience";
 import { Reservation } from "@/components/sections/Reservation";
 import { Footer } from "@/components/sections/Footer";
+
+// Dynamically import the 3D scene to prevent SSR hydration and window undefined issues on Vercel
+const CafeScene = dynamic(() => import("@/components/canvas/CafeScene").then(mod => mod.CafeScene), {
+  ssr: false,
+});
 
 export default function Home() {
   return (
