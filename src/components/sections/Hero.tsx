@@ -1,141 +1,138 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ChevronDown, Volume2, VolumeX, Menu, ArrowRight } from "lucide-react";
-import { useState } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { ArrowRight, Sparkles, Star, Coffee } from "lucide-react";
 import { MagneticButton } from "@/components/MagneticButton";
+import { useRef } from "react";
 
 export function Hero() {
-  const [isMuted, setIsMuted] = useState(true);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"]
+  });
+
+  const y1 = useTransform(scrollYProgress, [0, 1], [0, 300]);
+  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   return (
-    <section className="relative w-full h-[100svh] overflow-hidden flex flex-col pointer-events-auto">
-      
-      {/* Navbar (Glassmorphism) */}
-      <motion.nav 
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, delay: 0.5 }}
-        className="absolute top-0 w-full z-50 flex items-center justify-between px-6 md:px-12 py-6 pointer-events-auto"
-      >
-        <div className="text-xl font-serif text-cream-white tracking-widest uppercase">
-          Cinematic
-        </div>
-        <div className="hidden md:flex gap-8 items-center text-sm uppercase tracking-widest text-cafe-100">
-          <span className="hover:text-orange-glow transition-colors cursor-pointer">Menu</span>
-          <span className="hover:text-orange-glow transition-colors cursor-pointer">Story</span>
-          <span className="hover:text-orange-glow transition-colors cursor-pointer">Experience</span>
-        </div>
-        <button className="md:hidden text-cream-white p-2">
-          <Menu size={24} />
-        </button>
-      </motion.nav>
+    <section ref={containerRef} className="relative w-full min-h-screen flex items-center pt-24 pb-20 px-6 md:px-12 overflow-hidden bg-black-matte">
+      {/* Cinematic Overlays */}
+      <div className="absolute inset-0 z-10 pointer-events-none">
+        <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-black-matte via-black-matte/40 to-transparent" />
+        <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-black-matte via-black-matte/40 to-transparent" />
+      </div>
 
-      {/* Social Sidebar */}
-      <motion.div 
-        initial={{ opacity: 0, x: -20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 1, delay: 1 }}
-        className="hidden lg:flex absolute left-8 top-1/2 -translate-y-1/2 flex-col gap-6 z-40"
-      >
-        <div className="w-[1px] h-16 bg-white/20 mx-auto" />
-        <span className="text-xs text-cafe-300 uppercase tracking-[0.3em] rotate-180" style={{ writingMode: 'vertical-rl' }}>
-          Instagram
-        </span>
-        <span className="text-xs text-cafe-300 uppercase tracking-[0.3em] rotate-180" style={{ writingMode: 'vertical-rl' }}>
-          Twitter
-        </span>
-        <div className="w-[1px] h-16 bg-white/20 mx-auto" />
-      </motion.div>
-
-      {/* Main Asymmetrical Layout */}
-      <div className="flex-1 w-full flex flex-col md:flex-row relative z-10 px-6 md:px-24 pt-24 md:pt-0 pointer-events-none">
-        
+      <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 relative z-20">
         {/* Left Side: Content */}
-        <div className="w-full md:w-5/12 h-full flex flex-col justify-center pointer-events-auto">
+        <div className="lg:col-span-7 flex flex-col justify-center">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2, delay: 0.2 }}
+            style={{ y: y1, opacity }}
+            initial={{ opacity: 0, x: -100 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
           >
-            {/* Badge */}
-            <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-md mb-8">
-              <span className="w-2 h-2 rounded-full bg-orange-glow animate-pulse" />
-              <span className="text-[10px] uppercase tracking-widest text-cafe-100 font-medium">Open Until Midnight</span>
+            <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-gold-accent/30 bg-gold-accent/5 mb-10">
+              <Sparkles size={16} className="text-gold-accent animate-pulse" />
+              <span className="text-xs font-bold uppercase tracking-[0.3em] text-gold-accent">Award Winning Experience</span>
             </div>
 
-            <h1 className="text-5xl md:text-7xl lg:text-[5.5rem] font-serif font-medium text-cream-white leading-[1.1] mb-8">
+            <h1 className="text-6xl md:text-8xl lg:text-[7.5rem] font-serif font-medium text-cream-white leading-[0.95] mb-10 tracking-tighter">
               Crafted Coffee. <br />
-              <span className="italic text-transparent bg-clip-text bg-gradient-to-r from-gold-accent to-cafe-200">
-                Cinematic Experience.
+              <span className="italic text-transparent bg-clip-text bg-gradient-to-r from-gold-accent via-cafe-300 to-orange-glow">
+                Cinematic Ritual.
               </span>
             </h1>
 
-            <p className="text-cafe-100/80 text-xl max-w-md mb-12 font-sans font-light leading-relaxed">
-              Where Coffee Meets Cinema.
+            <p className="text-cafe-100 text-2xl max-w-xl mb-16 font-sans font-light leading-relaxed">
+              Where Coffee Meets Cinema. <br />
+              <span className="text-cafe-300">Experience luxury brewing inside an immersive sanctuary designed for the senses.</span>
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-5">
-              <MagneticButton className="px-8 py-4 bg-white/5 border-orange-glow/30 flex items-center justify-center gap-3">
-                <span className="text-sm font-medium uppercase tracking-wider text-cream-white">Reserve a Table</span>
-                <ArrowRight size={16} className="text-orange-glow" />
+            <div className="flex flex-col sm:flex-row gap-8 items-center">
+              <MagneticButton className="px-10 py-5 bg-gold-accent/10 border-gold-accent/30 flex items-center justify-center gap-4 group">
+                <span className="text-xs font-bold uppercase tracking-[0.3em] text-cream-white">Reserve a Table</span>
+                <ArrowRight size={18} className="text-gold-accent group-hover:translate-x-2 transition-transform" />
               </MagneticButton>
-              <MagneticButton className="px-8 py-4 flex items-center justify-center">
-                <span className="text-sm font-medium uppercase tracking-wider text-cafe-100">Explore Signature Menu</span>
+              <MagneticButton className="px-10 py-5 flex items-center justify-center border-white/5 bg-white/[0.02]">
+                <span className="text-xs font-bold uppercase tracking-[0.3em] text-cafe-100">The Signature Menu</span>
               </MagneticButton>
             </div>
           </motion.div>
         </div>
 
-        {/* Right Side: Empty space for the 3D scene (Canvas is absolute and positioned behind) */}
-        <div className="w-full md:w-7/12 h-full relative pointer-events-none hidden md:block">
-           {/* Mini floating review card overlay */}
-           <motion.div 
-             initial={{ opacity: 0, scale: 0.9, y: 20 }}
-             animate={{ opacity: 1, scale: 1, y: 0 }}
-             transition={{ duration: 1, delay: 1.5 }}
-             className="absolute bottom-32 right-12 glass-panel p-5 max-w-[240px] pointer-events-auto shadow-2xl"
-           >
-             <div className="flex gap-1 text-gold-accent mb-2">
-               ★★★★★
+        {/* Right Side: Interactive Badge/Mini-Review (Layered Depth) */}
+        <div className="lg:col-span-5 relative flex items-center justify-center">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
+            animate={{ opacity: 1, scale: 1, rotate: 0 }}
+            transition={{ duration: 1.5, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            className="glass-panel p-10 max-w-[320px] relative z-30 shadow-2xl border-white/10 backdrop-blur-2xl hover:scale-105 transition-transform duration-700"
+          >
+             <div className="flex gap-1 text-gold-accent mb-6">
+               {[...Array(5)].map((_, i) => <Star key={i} size={14} fill="currentColor" />)}
              </div>
-             <p className="text-xs text-cafe-100 italic">&quot;The most visually stunning cafe I&apos;ve ever visited. The espresso is just as good.&quot;</p>
-             <p className="text-[10px] text-cafe-300 mt-2 uppercase tracking-wider">&mdash; Vogue Magazine</p>
-           </motion.div>
-        </div>
+             <p className="text-lg text-cafe-100 italic leading-relaxed mb-8">
+               &quot;The most visually stunning cafe I&apos;ve ever visited. The extraction is pure liquid gold.&quot;
+             </p>
+             <div className="flex items-center gap-4">
+               <div className="w-10 h-10 rounded-full bg-cafe-800 border border-gold-accent/30 flex items-center justify-center text-gold-accent">
+                 <Coffee size={18} />
+               </div>
+               <div>
+                 <p className="text-[11px] text-white font-bold uppercase tracking-widest leading-none mb-1">Vogue Magazine</p>
+                 <p className="text-[9px] text-cafe-400 uppercase tracking-widest">Cultural Review 2026</p>
+               </div>
+             </div>
 
+             {/* Animated floating glow */}
+             <div className="absolute -top-10 -right-10 w-32 h-32 bg-orange-glow/20 rounded-full blur-[60px] animate-pulse" />
+          </motion.div>
+        </div>
       </div>
 
-      {/* Bottom Controls */}
+      {/* Floating Particles/Beans Layer */}
+      <div className="absolute inset-0 pointer-events-none z-20">
+        {[...Array(12)].map((_, i) => (
+          <motion.div
+            key={i}
+            initial={{ 
+              x: Math.random() * 100 + "%", 
+              y: Math.random() * 100 + "%",
+              opacity: 0 
+            }}
+            animate={{ 
+              y: [null, "-=100", "+=50"],
+              x: [null, "+=30", "-=30"],
+              opacity: [0, 0.4, 0],
+              rotate: [0, 360]
+            }}
+            transition={{ 
+              duration: 10 + Math.random() * 10, 
+              repeat: Infinity, 
+              ease: "linear" 
+            }}
+            className="absolute w-2 h-3 bg-[#3d2b1f] rounded-full blur-[0.5px]"
+          />
+        ))}
+      </div>
+
+      {/* Scroll Indicator */}
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 1 }}
-        className="absolute bottom-8 w-full flex justify-between items-center px-6 md:px-12 z-40 pointer-events-auto"
+        transition={{ delay: 2 }}
+        className="absolute bottom-12 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-4"
       >
-        {/* Sound Toggle */}
-        <button 
-          onClick={() => setIsMuted(!isMuted)}
-          className="w-12 h-12 rounded-full border border-white/10 bg-white/5 backdrop-blur-md flex items-center justify-center text-cafe-300 hover:text-orange-glow hover:border-orange-glow/30 transition-all group"
-        >
-          {isMuted ? <VolumeX size={18} /> : <Volume2 size={18} />}
-        </button>
-
-        {/* Scroll Indicator */}
-        <div className="flex flex-col items-center gap-3 text-cafe-300 cursor-pointer group absolute left-1/2 -translate-x-1/2">
-          <span className="text-[10px] uppercase tracking-[0.2em] font-medium group-hover:text-orange-glow transition-colors">Scroll</span>
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-          >
-            <ChevronDown size={18} className="group-hover:text-orange-glow transition-colors" />
-          </motion.div>
+        <span className="text-[9px] uppercase tracking-[0.5em] text-cafe-400 font-bold vertical-text">Scroll</span>
+        <div className="w-[1px] h-20 bg-gradient-to-b from-gold-accent to-transparent relative overflow-hidden">
+          <motion.div 
+            animate={{ y: ["-100%", "100%"] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+            className="absolute top-0 left-0 w-full h-1/2 bg-white"
+          />
         </div>
-        
-        {/* Empty div for flex balance if needed, or something else */}
-        <div className="w-12 h-12" />
       </motion.div>
-
     </section>
   );
 }
