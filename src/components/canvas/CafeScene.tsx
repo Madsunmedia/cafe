@@ -3,7 +3,7 @@
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Environment, Sparkles, PerspectiveCamera, MeshTransmissionMaterial, Lightformer, Float, ContactShadows } from "@react-three/drei";
 import { EffectComposer, Bloom, DepthOfField, Vignette, Noise } from "@react-three/postprocessing";
-import { useRef, useMemo } from "react";
+import { useRef } from "react";
 import * as THREE from "three";
 
 // --- Foreground Elements ---

@@ -99,8 +99,8 @@ export function Hero() {
              <div className="flex gap-1 text-gold-accent mb-2">
                ★★★★★
              </div>
-             <p className="text-xs text-cafe-100 italic">"The most visually stunning cafe I've ever visited. The espresso is just as good."</p>
-             <p className="text-[10px] text-cafe-300 mt-2 uppercase tracking-wider">— Vogue Magazine</p>
+             <p className="text-xs text-cafe-100 italic">&quot;The most visually stunning cafe I&apos;ve ever visited. The espresso is just as good.&quot;</p>
+             <p className="text-[10px] text-cafe-300 mt-2 uppercase tracking-wider">&mdash; Vogue Magazine</p>
            </motion.div>
         </div>
 

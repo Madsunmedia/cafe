@@ -2,7 +2,6 @@
 
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import Image from "next/image";
 
 export function About() {
   const containerRef = useRef<HTMLDivElement>(null);
