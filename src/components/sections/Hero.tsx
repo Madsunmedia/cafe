@@ -37,16 +37,15 @@ export function Hero() {
               <span className="text-xs font-bold uppercase tracking-[0.3em] text-gold-accent">Award Winning Experience</span>
             </div>
 
-            <h1 className="text-6xl md:text-8xl lg:text-[7.5rem] font-serif font-medium text-cream-white leading-[0.95] mb-10 tracking-tighter">
-              Crafted Coffee. <br />
+            <h1 className="text-6xl md:text-8xl lg:text-[8rem] font-serif font-medium text-cream-white leading-[0.9] mb-6 tracking-tighter">
+              Crafted <br />
               <span className="italic text-transparent bg-clip-text bg-gradient-to-r from-gold-accent via-cafe-300 to-orange-glow">
-                Cinematic Ritual.
+                Coffee.
               </span>
             </h1>
 
-            <p className="text-cafe-100 text-2xl max-w-xl mb-16 font-sans font-light leading-relaxed">
-              Where Coffee Meets Cinema. <br />
-              <span className="text-cafe-300">Experience luxury brewing inside an immersive sanctuary designed for the senses.</span>
+            <p className="text-cafe-100 text-3xl max-w-xl mb-16 font-sans font-light leading-relaxed tracking-widest uppercase">
+              Cinematic Ritual.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-8 items-center">
