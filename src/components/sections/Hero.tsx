@@ -65,23 +65,23 @@ export function Hero() {
             </div>
 
             <h1 className="text-5xl md:text-7xl lg:text-[5.5rem] font-serif font-medium text-cream-white leading-[1.1] mb-8">
-              Where Coffee <br />
+              Crafted Coffee. <br />
               <span className="italic text-transparent bg-clip-text bg-gradient-to-r from-gold-accent to-cafe-200">
-                Meets Cinema.
+                Cinematic Experience.
               </span>
             </h1>
 
             <p className="text-cafe-100/80 text-lg max-w-md mb-12 font-sans font-light leading-relaxed">
-              Experience handcrafted coffee inside an immersive luxury atmosphere designed for comfort, creativity, and unforgettable moments.
+              Experience luxury coffee inside a visually immersive atmosphere designed for creativity, comfort, and unforgettable moments.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-5">
               <MagneticButton className="px-8 py-4 bg-white/5 border-orange-glow/30 flex items-center justify-center gap-3">
-                <span className="text-sm font-medium uppercase tracking-wider text-cream-white">Book Experience</span>
+                <span className="text-sm font-medium uppercase tracking-wider text-cream-white">Reserve a Table</span>
                 <ArrowRight size={16} className="text-orange-glow" />
               </MagneticButton>
               <MagneticButton className="px-8 py-4 flex items-center justify-center">
-                <span className="text-sm font-medium uppercase tracking-wider text-cafe-100">View Signature Menu</span>
+                <span className="text-sm font-medium uppercase tracking-wider text-cafe-100">Explore Signature Menu</span>
               </MagneticButton>
             </div>
           </motion.div>
