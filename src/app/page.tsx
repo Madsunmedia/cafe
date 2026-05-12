@@ -7,6 +7,7 @@ import { Menu } from "@/components/sections/Menu";
 import { About } from "@/components/sections/About";
 import { Experience } from "@/components/sections/Experience";
 import { Reservation } from "@/components/sections/Reservation";
+import { PerfectPour } from "@/components/sections/PerfectPour";
 import { Footer } from "@/components/sections/Footer";
 import { Testimonials } from "@/components/sections/Testimonials";
 import { Gallery } from "@/components/sections/Gallery";
@@ -29,6 +30,9 @@ export default function Home() {
       {/* Content */}
       <div className="relative z-10 flex flex-col">
         <Hero />
+        
+        {/* The Perfect Pour Infographic Section */}
+        <PerfectPour />
         
         {/* We add a subtle gradient transition between the 3D hero and the dark sections */}
         <div className="w-full h-32 bg-gradient-to-b from-transparent to-black-matte" />
