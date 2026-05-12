@@ -51,11 +51,11 @@ function CoffeeSetup() {
       {/* Steam */}
       <Sparkles
         position={[0, 1.2, 0]}
-        count={30}
+        count={15}
         scale={[0.5, 1.5, 0.5]}
-        size={6}
+        size={4}
         speed={0.2}
-        opacity={0.4}
+        opacity={0.3}
         color="#e0b08b"
       />
       
@@ -99,11 +99,13 @@ function RainyWindow() {
         <planeGeometry args={[30, 15]} />
         <MeshTransmissionMaterial 
           background={new THREE.Color("#070605")}
-          transmission={0.9} 
-          thickness={0.5} 
-          roughness={0.4}
-          ior={1.5}
-          chromaticAberration={0.05}
+          transmission={0.8} 
+          thickness={0.2} 
+          roughness={0.5}
+          ior={1.2}
+          chromaticAberration={0.02}
+          resolution={512} // Lower resolution for refraction
+          samples={4} // Drastically reduce samples for performance
         />
       </mesh>
       
@@ -127,11 +129,11 @@ function RainyWindow() {
       {/* Simulated Rain Drops on Glass */}
       <Sparkles
         position={[0, 2, 0.1]}
-        count={200}
+        count={50}
         scale={[30, 15, 0.1]}
-        size={1.5}
+        size={1}
         speed={0}
-        opacity={0.3}
+        opacity={0.2}
         color="#ffffff"
       />
     </group>
@@ -142,11 +144,11 @@ function AtmosphericDust() {
   return (
     <>
       <Sparkles
-        count={300}
+        count={100}
         scale={[20, 10, 15]}
-        size={2}
+        size={1.5}
         speed={0.1}
-        opacity={0.15}
+        opacity={0.1}
         color="#c99852"
       />
       {/* Fog to simulate steam and volumetric density */}
@@ -205,7 +207,15 @@ function CameraRig() {
 export function CafeScene() {
   return (
     <div className="w-full h-[100svh] absolute inset-0 z-0 pointer-events-none bg-black-matte">
-      <Canvas shadows dpr={[1, 2]}>
+      <Canvas 
+        shadows 
+        dpr={1} // Lock to 1 for maximum performance during scroll
+        gl={{ 
+          antialias: false, // Disable expensive antialiasing in favor of postprocessing
+          powerPreference: "high-performance",
+          alpha: false
+        }}
+      >
         <PerspectiveCamera makeDefault position={[0, 2, 8]} fov={35} />
         
         <CinematicLighting />
@@ -217,18 +227,16 @@ export function CafeScene() {
         <WoodenTable />           {/* Foreground Base */}
         <CoffeeSetup />           {/* Foreground Detail */}
         
-        <ContactShadows position={[3, -1.49, 2]} opacity={0.5} scale={10} blur={2} far={2} />
+        <ContactShadows position={[3, -1.49, 2]} opacity={0.4} scale={10} blur={2.5} far={2} />
 
         <CameraRig />
 
-        <EffectComposer multisampling={4}>
-          {/* Subtle Bloom for the neon sign and highlights */}
-          <Bloom luminanceThreshold={1.2} mipmapBlur intensity={1.5} />
-          {/* Depth of Field to blur background and very close foreground */}
-          <DepthOfField target={[2.5, -1.3, 2.5]} focalLength={0.03} bokehScale={4} height={700} />
-          {/* Cinematic Vignette & Noise */}
-          <Vignette eskil={false} offset={0.2} darkness={1.3} />
-          <Noise opacity={0.03} />
+        <EffectComposer multisampling={0}>
+          {/* Subtle Bloom */}
+          <Bloom luminanceThreshold={1.2} mipmapBlur intensity={1} />
+          {/* Simplified Vignette & Noise */}
+          <Vignette eskil={false} offset={0.3} darkness={1.1} />
+          <Noise opacity={0.02} />
         </EffectComposer>
       </Canvas>
     </div>
