@@ -5,6 +5,8 @@ import { ArrowRight, Sparkles } from "lucide-react";
 import { MagneticButton } from "@/components/MagneticButton";
 import { useRef } from "react";
 
+import { Floating3DImage } from "@/components/Floating3DImage";
+
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -60,8 +62,10 @@ export function Hero() {
           </motion.div>
         </div>
 
-        {/* Right Side: Interactive Element (Empty to allow 3D scene to shine) */}
-        <div className="lg:col-span-5 relative flex items-center justify-center" />
+        {/* Right Side: 3D Picture Space */}
+        <div className="lg:col-span-5 relative flex items-center justify-center">
+           <Floating3DImage />
+        </div>
       </div>
 
       {/* Floating Particles/Beans Layer */}
