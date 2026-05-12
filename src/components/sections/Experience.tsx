@@ -13,13 +13,6 @@ const features = [
   { icon: Heart, title: "Connection", desc: "Great Coffee, Better Moments" },
 ];
 
-const markers = [
-  { top: "15%", left: "15%", label: "Curated Ambience", desc: "Thoughtfully designed to calm your mind.", icon: Music },
-  { top: "35%", left: "75%", label: "Warm Lighting", desc: "Soft lights for a cozy and relaxing vibe.", icon: Lightbulb },
-  { top: "60%", left: "30%", label: "Comfort Zones", desc: "Relax, unwind and feel at home.", icon: Sofa },
-  { top: "75%", left: "70%", label: "Signature Coffee", desc: "Crafted with passion, served with heart.", icon: Coffee },
-];
-
 export function Experience() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -124,49 +117,53 @@ export function Experience() {
                 className="absolute inset-[-100px] z-0"
               >
                 <Image 
-                  src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=2047&auto=format&fit=crop"
+                  src="/immerse-cafe.jpg"
                   alt="Cafe Atmosphere"
                   fill
-                  className="object-cover opacity-80"
+                  className="object-cover opacity-90"
                 />
               </motion.div>
 
               {/* Light Flicker Overlays (Hanging Bulbs Simulation) */}
               <motion.div 
-                animate={{ opacity: [0.4, 0.6, 0.45, 0.7, 0.4] }}
-                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-0 z-10 pointer-events-none bg-[radial-gradient(circle_at_80%_20%,_rgba(219,106,20,0.2),_transparent)]"
+                animate={{ opacity: [0.3, 0.5, 0.35, 0.6, 0.3] }}
+                transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+                className="absolute inset-0 z-10 pointer-events-none bg-[radial-gradient(circle_at_80%_20%,_rgba(219,106,20,0.15),_transparent)]"
               />
               
-              <div className="absolute inset-0 bg-gradient-to-t from-black-matte/80 via-transparent to-transparent z-10" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black-matte/70 via-transparent to-transparent z-10" />
 
               {/* Drifting Steam / Dust Particles */}
               <div className="absolute inset-0 pointer-events-none z-20">
-                {[...Array(15)].map((_, i) => (
+                {[...Array(12)].map((_, i) => (
                   <motion.div
                     key={i}
                     animate={{
-                      y: [0, -100],
-                      x: [0, (Math.random() - 0.5) * 50],
-                      opacity: [0, 0.3, 0],
-                      scale: [0.5, 1.5]
+                      y: [0, -120],
+                      x: [0, (Math.random() - 0.5) * 40],
+                      opacity: [0, 0.2, 0],
                     }}
                     transition={{
-                      duration: 8 + Math.random() * 5,
+                      duration: 10 + Math.random() * 5,
                       repeat: Infinity,
                       delay: Math.random() * 5
                     }}
-                    className="absolute w-2 h-4 bg-white/5 blur-[8px] rounded-full"
+                    className="absolute w-2 h-4 bg-white/5 blur-[10px] rounded-full"
                     style={{
                       left: `${Math.random() * 100}%`,
-                      bottom: `${Math.random() * 30}%`
+                      bottom: `${Math.random() * 40}%`
                     }}
                   />
                 ))}
               </div>
 
               {/* Interactive Markers with Pulse */}
-              {markers.map((m, i) => (
+              {[
+                { top: "18%", left: "55%", label: "Artisan Counter", desc: "Where the magic happens.", icon: Coffee },
+                { top: "35%", left: "85%", label: "Natural Light", desc: "Golden hour every hour.", icon: Lightbulb },
+                { top: "65%", left: "45%", label: "Wicker Comfort", desc: "Handcrafted seating for long talks.", icon: Sofa },
+                { top: "78%", left: "75%", label: "Cozy Nooks", desc: "Find your perfect corner.", icon: Heart },
+              ].map((m, i) => (
                 <motion.div
                   key={i}
                   initial={{ opacity: 0, scale: 0 }}
@@ -189,7 +186,7 @@ export function Experience() {
                     {/* Tooltip */}
                     <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-6 w-56 p-5 glass-panel opacity-0 translate-y-3 group-hover/marker:opacity-100 group-hover/marker:translate-y-0 transition-all duration-700 pointer-events-none border-gold-accent/20 backdrop-blur-3xl shadow-[0_20px_50px_rgba(0,0,0,0.8)]">
                       <h4 className="text-[11px] uppercase tracking-widest text-gold-accent font-bold mb-2">{m.label}</h4>
-                      <p className="text-[10px] text-cafe-100 font-light leading-relaxed italic">"{m.desc}"</p>
+                      <p className="text-[10px] text-cafe-100 font-light leading-relaxed">"{m.desc}"</p>
                     </div>
                   </div>
                 </motion.div>

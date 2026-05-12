@@ -2,153 +2,193 @@
 
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Environment, Sparkles, PerspectiveCamera, MeshTransmissionMaterial, Lightformer, Float, ContactShadows } from "@react-three/drei";
-import { EffectComposer, Bloom, Vignette, Noise } from "@react-three/postprocessing";
-import { useRef, useMemo } from "react";
+import { EffectComposer, Bloom, DepthOfField, Vignette, Noise } from "@react-three/postprocessing";
+import { useRef } from "react";
 import * as THREE from "three";
 
-// --- Realistic Pouring Components ---
+// --- Foreground Elements ---
 
-function PouringLiquid() {
-  const streamRef = useRef<THREE.Mesh>(null);
-  const rippleRef = useRef<THREE.Mesh>(null);
-  
-  useFrame((state) => {
-    const time = state.clock.getElapsedTime();
-    if (streamRef.current) {
-      // Subtle wobble and scale for stream
-      streamRef.current.rotation.y = Math.sin(time * 5) * 0.02;
-    }
-    if (rippleRef.current) {
-      rippleRef.current.scale.setScalar(1 + Math.sin(time * 3) * 0.05);
-      const mat = rippleRef.current.material as THREE.MeshPhysicalMaterial;
-      mat.opacity = 0.5 + Math.sin(time * 3) * 0.2;
-    }
-  });
-
+function WoodenTable() {
   return (
-    <group position={[0, 0.7, 0]}>
-      {/* Liquid Stream */}
-      <mesh ref={streamRef} position={[0.2, 0.4, 0]} rotation={[0, 0, -0.2]}>
-        <cylinderGeometry args={[0.02, 0.015, 1, 16]} />
+    <group position={[3, -1.5, 2]}>
+      {/* Table Top */}
+      <mesh receiveShadow castShadow>
+        <cylinderGeometry args={[4, 4, 0.2, 64]} />
         <meshPhysicalMaterial 
-          color="#db6a14" 
-          emissive="#543a28" 
-          emissiveIntensity={0.5}
-          roughness={0.1} 
-          metalness={0.8}
-          transparent
-          opacity={0.9}
-        />
-      </mesh>
-      
-      {/* Swirling Ripple / Latte Art Base */}
-      <mesh ref={rippleRef} rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.05, 0]}>
-        <circleGeometry args={[0.45, 32]} />
-        <meshPhysicalMaterial 
-          color="#f5f0e6" 
-          roughness={0.2}
-          transparent
-          opacity={0.8}
-          emissive="#c99852"
-          emissiveIntensity={0.2}
+          color="#3c2a21" 
+          roughness={0.7} 
+          metalness={0.1}
+          clearcoat={0.1}
         />
       </mesh>
     </group>
   );
 }
 
-function CoffeeCup() {
+function CoffeeSetup() {
+  const group = useRef<THREE.Group>(null);
+
   return (
-    <group position={[2.5, -1.3, 2.5]} rotation={[0, -Math.PI / 4, 0]}>
-      {/* Saucer */}
+    <group ref={group} position={[2.5, -1.3, 2.5]} rotation={[0, -Math.PI / 4, 0]}>
+      {/* Plate */}
       <mesh receiveShadow castShadow position={[0, 0.05, 0]}>
-        <cylinderGeometry args={[0.9, 0.7, 0.06, 64]} />
-        <meshPhysicalMaterial color="#070605" roughness={0.2} metalness={0.8} clearcoat={1} />
+        <cylinderGeometry args={[0.8, 0.6, 0.05, 32]} />
+        <meshPhysicalMaterial color="#f5f0e6" roughness={0.2} metalness={0.1} />
       </mesh>
       
-      {/* Cup Body */}
-      <mesh castShadow receiveShadow position={[0, 0.45, 0]}>
-        <cylinderGeometry args={[0.55, 0.45, 0.8, 64]} />
-        <meshPhysicalMaterial 
-          color="#070605" 
-          roughness={0.1} 
-          metalness={0.9} 
-          clearcoat={1}
-          reflectivity={1}
-        />
+      {/* Cup */}
+      <mesh castShadow receiveShadow position={[0, 0.4, 0]}>
+        <cylinderGeometry args={[0.5, 0.4, 0.7, 32]} />
+        <meshPhysicalMaterial color="#1f1612" roughness={0.1} metalness={0.8} clearcoat={1} />
       </mesh>
 
-      {/* Coffee Surface */}
-      <mesh position={[0, 0.75, 0]}>
-        <cylinderGeometry args={[0.5, 0.5, 0.02, 64]} />
-        <meshPhysicalMaterial 
-          color="#1a110a" 
-          roughness={0.05} 
-          metalness={0.5}
-          emissive="#2d1f19"
-        />
+      {/* Coffee Liquid */}
+      <mesh position={[0, 0.72, 0]}>
+        <cylinderGeometry args={[0.48, 0.48, 0.02, 32]} />
+        <meshPhysicalMaterial color="#0a0705" roughness={0.1} metalness={0.9} />
       </mesh>
-      
-      <PouringLiquid />
 
       {/* Steam */}
       <Sparkles
         position={[0, 1.2, 0]}
-        count={20}
-        scale={[0.6, 2, 0.6]}
-        size={3}
-        speed={0.3}
-        opacity={0.2}
+        count={15}
+        scale={[0.5, 1.5, 0.5]}
+        size={4}
+        speed={0.2}
+        opacity={0.3}
         color="#e0b08b"
+      />
+      
+      {/* Abstract Croissant (Torus) */}
+      <mesh castShadow receiveShadow position={[-1.2, 0.15, 0.2]} rotation={[Math.PI/2, Math.PI/4, 0]} scale={[1, 0.5, 1]}>
+        <torusGeometry args={[0.3, 0.15, 16, 32]} />
+        <meshPhysicalMaterial color="#c28d65" roughness={0.8} />
+      </mesh>
+    </group>
+  );
+}
+
+function EspressoMachine() {
+  return (
+    <group position={[6, -0.5, -1]} rotation={[0, -Math.PI/6, 0]}>
+      {/* Machine Body */}
+      <mesh castShadow receiveShadow position={[0, 0, 0]}>
+        <boxGeometry args={[2, 2, 1.5]} />
+        <meshPhysicalMaterial color="#070605" roughness={0.3} metalness={0.8} clearcoat={0.5} />
+      </mesh>
+      {/* Metallic Details */}
+      <mesh castShadow receiveShadow position={[-0.8, 0.2, 0.8]}>
+        <cylinderGeometry args={[0.1, 0.1, 0.4, 16]} />
+        <meshPhysicalMaterial color="#c99852" roughness={0.2} metalness={1} />
+      </mesh>
+      <mesh castShadow receiveShadow position={[-0.4, 0.2, 0.8]}>
+        <cylinderGeometry args={[0.1, 0.1, 0.4, 16]} />
+        <meshPhysicalMaterial color="#c99852" roughness={0.2} metalness={1} />
+      </mesh>
+    </group>
+  );
+}
+
+// --- Background Elements ---
+
+function RainyWindow() {
+  return (
+    <group position={[0, 0, -10]}>
+      {/* Glass Pane */}
+      <mesh position={[0, 2, 0]}>
+        <planeGeometry args={[30, 15]} />
+        <MeshTransmissionMaterial 
+          background={new THREE.Color("#070605")}
+          transmission={0.8} 
+          thickness={0.2} 
+          roughness={0.5}
+          ior={1.2}
+          chromaticAberration={0.02}
+          resolution={512} // Lower resolution for refraction
+          samples={4} // Drastically reduce samples for performance
+        />
+      </mesh>
+      
+      {/* Neon Sign behind glass */}
+      <Float speed={2} rotationIntensity={0.1} floatIntensity={0.1}>
+        <mesh position={[-5, 3, -2]}>
+          <boxGeometry args={[4, 1, 0.1]} />
+          <meshBasicMaterial color="#db6a14" toneMapped={false} />
+          <pointLight color="#db6a14" intensity={5} distance={10} />
+        </mesh>
+      </Float>
+
+      {/* Abstract silhouettes moving behind window */}
+      <Float speed={0.5} floatIntensity={0} position={[-2, 1, -1]}>
+         <mesh>
+           <capsuleGeometry args={[0.5, 2, 8, 16]} />
+           <meshBasicMaterial color="#000000" opacity={0.8} transparent />
+         </mesh>
+      </Float>
+
+      {/* Simulated Rain Drops on Glass */}
+      <Sparkles
+        position={[0, 2, 0.1]}
+        count={50}
+        scale={[30, 15, 0.1]}
+        size={1}
+        speed={0}
+        opacity={0.2}
+        color="#ffffff"
       />
     </group>
   );
 }
 
-function MetalJug() {
-  const jugRef = useRef<THREE.Group>(null);
-  
-  useFrame((state) => {
-    const time = state.clock.getElapsedTime();
-    if (jugRef.current) {
-      // Tilting motion
-      jugRef.current.rotation.z = -Math.PI / 5 + Math.sin(time) * 0.05;
-      jugRef.current.position.y = 1.2 + Math.sin(time * 0.5) * 0.05;
-    }
-  });
-
+function AtmosphericDust() {
   return (
-    <group ref={jugRef} position={[3.2, 0.8, 2.5]}>
-      <mesh castShadow rotation={[0, 0, Math.PI / 6]}>
-        <cylinderGeometry args={[0.3, 0.35, 0.8, 32]} />
-        <meshPhysicalMaterial color="#e5e5e5" metalness={1} roughness={0.1} clearcoat={1} />
-      </mesh>
-      {/* Spout */}
-      <mesh position={[-0.2, 0.3, 0]} rotation={[0, 0, Math.PI / 3]}>
-        <coneGeometry args={[0.1, 0.3, 16]} />
-        <meshPhysicalMaterial color="#cccccc" metalness={1} roughness={0.1} />
-      </mesh>
-    </group>
+    <>
+      <Sparkles
+        count={100}
+        scale={[20, 10, 15]}
+        size={1.5}
+        speed={0.1}
+        opacity={0.1}
+        color="#c99852"
+      />
+      {/* Fog to simulate steam and volumetric density */}
+      <fog attach="fog" args={["#070605", 5, 25]} />
+    </>
   );
 }
-
-// --- Atmosphere & Lighting ---
 
 function CinematicLighting() {
   return (
     <>
-      <ambientLight intensity={0.2} color="#3c2a21" />
+      <ambientLight intensity={0.1} color="#3c2a21" />
+      
+      {/* Key Light (Warm Tungsten) */}
       <spotLight
-        position={[10, 10, 10]}
-        angle={0.15}
-        penumbra={1}
-        intensity={15}
+        position={[8, 10, 5]}
+        angle={0.6}
+        penumbra={0.8}
+        intensity={8}
         color="#db6a14"
         castShadow
         shadow-bias={-0.0001}
+        shadow-mapSize={[2048, 2048]}
       />
-      <pointLight position={[-5, 5, 5]} intensity={2} color="#4a5d7c" />
-      <Environment preset="night" environmentIntensity={0.5} />
+
+      {/* Fill Light (Cooler exterior) */}
+      <spotLight
+        position={[-10, 5, -5]}
+        angle={0.8}
+        penumbra={1}
+        intensity={2}
+        color="#4a5d7c"
+      />
+
+      {/* Rim Light for depth */}
+      <pointLight position={[0, 2, -5]} intensity={3} color="#c99852" distance={15} />
+
+      <Environment preset="night" environmentIntensity={0.2}>
+        <Lightformer form="rect" intensity={2} color="#db6a14" position={[5, 5, -2]} scale={[10, 2, 1]} />
+      </Environment>
     </>
   );
 }
@@ -157,50 +197,44 @@ function CameraRig() {
   const { camera, mouse } = useThree();
   const vec = new THREE.Vector3();
 
-  return useFrame((state) => {
-    const time = state.clock.getElapsedTime();
-    // Subtle drift + mouse parallax
-    const driftX = Math.sin(time * 0.5) * 0.2;
-    const driftY = Math.cos(time * 0.5) * 0.1;
-    camera.position.lerp(vec.set(mouse.x * 0.8 + driftX, mouse.y * 0.4 + driftY + 2, 7), 0.02);
-    camera.lookAt(2, 0.5, 0);
+  return useFrame(() => {
+    // Parallax effect, slightly offset to the left since content is on the left
+    camera.position.lerp(vec.set(mouse.x * 1.5, mouse.y * 0.8 + 2, 8), 0.05);
+    camera.lookAt(2, 0, 0); // Look towards the 3D scene on the right
   });
 }
 
 export function CafeScene() {
   return (
     <div className="w-full h-[100svh] absolute inset-0 z-0 pointer-events-none bg-black-matte">
-      <Canvas shadows dpr={1} gl={{ antialias: true, alpha: false }}>
-        <PerspectiveCamera makeDefault position={[0, 2, 7]} fov={35} />
+      <Canvas 
+        shadows 
+        dpr={1} // Lock to 1 for maximum performance during scroll
+        gl={{ 
+          antialias: false, // Disable expensive antialiasing in favor of postprocessing
+          powerPreference: "high-performance",
+          alpha: false
+        }}
+      >
+        <PerspectiveCamera makeDefault position={[0, 2, 8]} fov={35} />
         
         <CinematicLighting />
+        <AtmosphericDust />
         
-        {/* Floating Coffee Beans / Particles */}
-        <Sparkles
-          count={60}
-          scale={[15, 10, 10]}
-          size={1.5}
-          speed={0.2}
-          opacity={0.15}
-          color="#c99852"
-        />
+        {/* Depth Layers */}
+        <RainyWindow />           {/* Background */}
+        <EspressoMachine />       {/* Midground */}
+        <WoodenTable />           {/* Foreground Base */}
+        <CoffeeSetup />           {/* Foreground Detail */}
         
-        {/* Scene Elements */}
-        <CoffeeCup />
-        <MetalJug />
-        
-        {/* Table Base */}
-        <mesh receiveShadow position={[3, -1.5, 2]}>
-          <cylinderGeometry args={[5, 5, 0.2, 64]} />
-          <meshPhysicalMaterial color="#1a110a" roughness={0.8} />
-        </mesh>
-
-        <ContactShadows position={[2.5, -1.49, 2.5]} opacity={0.6} scale={5} blur={2} far={1} />
+        <ContactShadows position={[3, -1.49, 2]} opacity={0.4} scale={10} blur={2.5} far={2} />
 
         <CameraRig />
 
         <EffectComposer multisampling={0}>
-          <Bloom luminanceThreshold={1} mipmapBlur intensity={0.5} />
+          {/* Subtle Bloom */}
+          <Bloom luminanceThreshold={1.2} mipmapBlur intensity={1} />
+          {/* Simplified Vignette & Noise */}
           <Vignette eskil={false} offset={0.3} darkness={1.1} />
           <Noise opacity={0.02} />
         </EffectComposer>

@@ -33,19 +33,17 @@ export function MagneticButton({ children, className, onClick }: MagneticButtonP
       onMouseMove={handleMouse}
       onMouseLeave={reset}
       animate={{ x: position.x, y: position.y }}
-      whileHover={{ scale: 1.1 }}
-      whileTap={{ scale: 0.9, rotate: [0, -2, 2, 0] }}
-      transition={{ type: "spring", stiffness: 200, damping: 10, mass: 0.1 }}
+      transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
       onClick={onClick}
       className={cn(
-        "relative overflow-hidden group rounded-full border border-white/10 bg-white/[0.03] backdrop-blur-xl transition-all duration-500 hover:border-orange-glow/30 hover:shadow-[0_0_40px_rgba(219,106,20,0.2)]",
+        "relative overflow-hidden group rounded-full border border-white/10 bg-white/[0.03] backdrop-blur-xl transition-all duration-500 hover:border-orange-glow/30 hover:shadow-[0_0_20px_rgba(219,106,20,0.2)]",
         className
       )}
     >
       <div className="relative z-10">{children}</div>
       
-      {/* Liquid hover effect - subtle glint */}
-      <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/5 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 translate-x-[-100%] group-hover:translate-x-[100%]" />
+      {/* Liquid hover effect */}
+      <div className="absolute inset-0 bg-gradient-to-r from-orange-glow/0 via-orange-glow/10 to-orange-glow/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 translate-x-[-100%] group-hover:translate-x-[100%] ease-in-out" style={{ transitionDuration: '1s' }} />
     </motion.button>
   );
 }
