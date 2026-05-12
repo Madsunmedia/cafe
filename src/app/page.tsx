@@ -8,6 +8,8 @@ import { About } from "@/components/sections/About";
 import { Experience } from "@/components/sections/Experience";
 import { Reservation } from "@/components/sections/Reservation";
 import { Footer } from "@/components/sections/Footer";
+import { Testimonials } from "@/components/sections/Testimonials";
+import { Gallery } from "@/components/sections/Gallery";
 
 // Dynamically import the 3D scene to prevent SSR hydration and window undefined issues on Vercel
 const CafeScene = dynamic(() => import("@/components/canvas/CafeScene").then(mod => mod.CafeScene), {
@@ -35,6 +37,8 @@ export default function Home() {
           <Menu />
           <About />
           <Experience />
+          <Testimonials />
+          <Gallery />
           <Reservation />
           <Footer />
         </div>
