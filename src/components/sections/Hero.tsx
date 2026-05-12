@@ -65,9 +65,9 @@ export function Hero() {
             </div>
 
             <h1 className="text-5xl md:text-7xl lg:text-[5.5rem] font-serif font-medium text-cream-white leading-[1.1] mb-8">
-              Crafted Coffee. <br />
+              Where Coffee <br />
               <span className="italic text-transparent bg-clip-text bg-gradient-to-r from-gold-accent to-cafe-200">
-                Cinematic Experience.
+                Meets Cinema.
               </span>
             </h1>
 
