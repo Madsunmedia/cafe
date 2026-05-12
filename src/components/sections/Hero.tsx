@@ -25,9 +25,9 @@ export function Hero() {
         <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-black-matte via-black-matte/40 to-transparent" />
       </div>
 
-      <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 relative z-20">
+      <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-20 relative z-20">
         {/* Left Side: Content */}
-        <div className="lg:col-span-7 flex flex-col justify-center">
+        <div className="lg:col-span-6 flex flex-col justify-center">
           <motion.div
             style={{ y: y1, opacity }}
             initial={{ opacity: 0, x: -100 }}
@@ -39,7 +39,7 @@ export function Hero() {
               <span className="text-xs font-bold uppercase tracking-[0.3em] text-gold-accent">Award Winning Experience</span>
             </div>
 
-            <h1 className="text-6xl md:text-8xl lg:text-[8rem] font-serif font-medium text-cream-white leading-[0.9] mb-6 tracking-tighter">
+            <h1 className="text-6xl md:text-8xl lg:text-[7.5rem] font-serif font-medium text-cream-white leading-[0.9] mb-6 tracking-tighter">
               Crafted <br />
               <span className="italic text-transparent bg-clip-text bg-gradient-to-r from-gold-accent via-cafe-300 to-orange-glow">
                 Coffee.
@@ -62,8 +62,8 @@ export function Hero() {
           </motion.div>
         </div>
 
-        {/* Right Side: 3D Picture Space */}
-        <div className="lg:col-span-5 relative flex items-center justify-center">
+        {/* Right Side: 3D Picture Space (Infographic Card) */}
+        <div className="lg:col-span-6 relative flex items-center justify-center">
            <Floating3DImage />
         </div>
       </div>
