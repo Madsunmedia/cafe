@@ -65,14 +65,14 @@ export function Hero() {
             </div>
 
             <h1 className="text-5xl md:text-7xl lg:text-[5.5rem] font-serif font-medium text-cream-white leading-[1.1] mb-8">
-              Where Coffee <br />
+              Crafted Coffee. <br />
               <span className="italic text-transparent bg-clip-text bg-gradient-to-r from-gold-accent to-cafe-200">
-                Meets Cinema.
+                Cinematic Experience.
               </span>
             </h1>
 
-            <p className="text-cafe-100/80 text-lg max-w-md mb-12 font-sans font-light leading-relaxed">
-              Experience luxury coffee inside a visually immersive atmosphere designed for creativity, comfort, and unforgettable moments.
+            <p className="text-cafe-100/80 text-xl max-w-md mb-12 font-sans font-light leading-relaxed">
+              Where Coffee Meets Cinema.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-5">
